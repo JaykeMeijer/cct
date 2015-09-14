@@ -15,13 +15,10 @@ class DrawHandling(BaseHandling):
     def __init__(self, world, env, clock):
         super().__init__(world, env, clock)
 
-        pygame.font.init()
-        self.fpsfont = pygame.font.SysFont(pygame.font.get_default_font(), 20)
-
     def iteration(self, fps):
         self.world.draw()
-        global_vars.screen.blit(self.fpsfont.render('%.1f' % fps, True,
-                                             (0, 255, 255)),
+        global_vars.screen.blit(global_vars.font_20.render('%.1f' % fps, True,
+                                                           (0, 255, 255)),
                          (550, 10))
         pygame.display.flip()
 

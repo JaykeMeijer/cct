@@ -72,7 +72,8 @@ class Office(Building):
         # Add internal components
         self.add(Door((self.internal_box[0][0] + self.internal_box[1][0] - 70,
                        self.internal_box[1][1] - 10)))
-        self.add(Desk((self.internal_box[0][0] + 40, self.internal_box[0][1])))
+        self.add(Desk((self.internal_box[0][0] + 40, self.internal_box[0][1]),
+                      "CEO"))
         self.add(Desk((self.internal_box[0][0] + 240,
                        self.internal_box[0][1])))
         self.add(Desk((self.internal_box[0][0] + 40,
@@ -118,17 +119,39 @@ class Desk(InternalObject):
                   "your competitors."
     tooltip = "Computer desk"
 
-    def __init__(self, position):
+    def __init__(self, position, user=None):
         super().__init__((150, 75), position)
         self.size = (150, 75)
         self.image = None
         self.update_position(position)
 
+        self.user = user
+        self.create_image()
+
+        print("Desk initialized")
+
+    def create_image(self):
         self.original_image = pygame.Surface(self.size)
         self.original_image.fill(pygame.Color('brown'))
         self.rescale(self.size)
 
-        print("Desk initialized")
+    def rescale(self, size):
+        '''Overwritten because of call to set user'''
+        super().rescale(size)
+        self.set_user(self.user)
+
+    def set_user(self, user):
+        if user is not None:
+            self.user = user
+            user_img = global_vars.font_30.render(self.user, True,
+                                                       (0, 0, 0))
+            ui_size = user_img.get_size()
+            self.image.blit(user_img, ((self.size[0] - ui_size[0]) / 2,
+                                       (self.size[1] - ui_size[1]) / 2))
+
+    def remove_user(self):
+        self.user = None
+        self.create_image()
 
     def draw_internal(self):
         global_vars.screen.fill(pygame.Color('blue'))

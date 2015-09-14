@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from pygame.locals import *
+import global_vars
 from environment import Environment
 from events import Event
 from world import World
 from buildings import Shed, Office
 from handling import InputHandling, LogicHandling, DrawHandling
-import global_vars
 import pygame
         
 
@@ -15,7 +14,9 @@ if __name__ == "__main__":
     #screen = pygame.display.set_mode(screensize, HWSURFACE | DOUBLEBUF | FULLSCREEN)
     screensize = (960, 540)
     global_vars.screen = \
-        pygame.display.set_mode(screensize, HWSURFACE | DOUBLEBUF)
+        pygame.display.set_mode(screensize,
+                                pygame.HWSURFACE |
+                                pygame.DOUBLEBUF)
     #info = pygame.display.Info()
     #print(info)
 

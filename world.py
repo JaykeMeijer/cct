@@ -2,10 +2,6 @@ import global_vars
 import pygame
 
 
-pygame.font.init()
-tooltip_font = pygame.font.SysFont(pygame.font.get_default_font(), 30)
-
-
 class WorldObject:
     name = ""
     description = ""
@@ -17,8 +13,8 @@ class WorldObject:
         self.size = (0, 0)
         self.image = None
         self.original_image = None
-        self.tooltip = tooltip_font.render(self.tooltip + ' ', True,
-                                           (0, 0, 0), (255, 255, 255))
+        self.tooltip = global_vars.font_30.render(self.tooltip + ' ', True,
+                                                  (0, 0, 0), (255, 255, 255))
         self.mouse_hovering = False
 
         self.left = None
