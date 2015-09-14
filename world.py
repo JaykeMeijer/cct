@@ -134,6 +134,7 @@ class WorldObject:
                 self.selected_object = None
                 self.main = True
         else:
+            # Not main and no selected object, check me and children
             val = self.verify_mouse_location()
             if val == 0:
                 self.mouse_hovering = False
@@ -144,7 +145,7 @@ class WorldObject:
                 to = self.right
 
             if to is not None:
-                res = to.mouse_clicked()
+                return to.mouse_clicked()
 
     def on_click(self):
         self.main = True
@@ -178,7 +179,7 @@ class WorldObject:
             else:
                 self.left.add_child(child)
         else:
-            if self.left is None:
+            if self.right is None:
                 self.right = child
             else:
                 self.right.add_child(child)
