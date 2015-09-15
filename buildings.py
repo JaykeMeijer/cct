@@ -34,12 +34,26 @@ class Shed(Building):
         self.original_image.fill(pygame.Color('brown'))
         self.rescale(self.size)
 
-        self.add(Door((930, 530)))
+        # Build internal view
+        screensize = global_vars.screen.get_size()
+        self.internal_box = (((screensize[0] - screensize[1] / 2) / 2, 0),
+                              (screensize[1] / 2, screensize[1]))
+        self.internal_image = pygame.Surface(screensize)
+        self.internal_image.fill(pygame.Color('black'))
+        floor = pygame.Surface(self.internal_box[1])
+        floor.fill(pygame.Color('grey'))
+        self.internal_image.blit(floor, self.internal_box[0])
+
+        # Add internal components
+        self.add(Door((self.internal_box[0][0] + self.internal_box[1][0] - 70,
+                       self.internal_box[1][1] - 10)))
+        self.add(Desk((self.internal_box[0][0] + 40, self.internal_box[0][1]),
+                      "CEO"))
 
         print("Shed initialized")
 
     def draw_internal(self):
-        global_vars.screen.fill(pygame.Color('black'))
+        global_vars.screen.blit(self.internal_image, (0, 0))
 
 class Office(Building):
     name = "Small Office"
@@ -65,15 +79,14 @@ class Office(Building):
                               (screensize[1], screensize[1]))
         self.internal_image = pygame.Surface(screensize)
         self.internal_image.fill(pygame.Color('black'))
-        floor = pygame.Surface((screensize[1], screensize[1]))
+        floor = pygame.Surface(self.internal_box[1])
         floor.fill(pygame.Color('grey'))
         self.internal_image.blit(floor, self.internal_box[0])
 
         # Add internal components
         self.add(Door((self.internal_box[0][0] + self.internal_box[1][0] - 70,
                        self.internal_box[1][1] - 10)))
-        self.add(Desk((self.internal_box[0][0] + 40, self.internal_box[0][1]),
-                      "CEO"))
+        self.add(Desk((self.internal_box[0][0] + 40, self.internal_box[0][1])))
         self.add(Desk((self.internal_box[0][0] + 240,
                        self.internal_box[0][1])))
         self.add(Desk((self.internal_box[0][0] + 40,
@@ -84,7 +97,6 @@ class Office(Building):
                        self.internal_box[0][1] + 400)))
         self.add(Desk((self.internal_box[0][0] + 240,
                        self.internal_box[0][1] + 400)))
-
 
         print("Office initialized")
 
@@ -136,7 +148,7 @@ class Desk(InternalObject):
         self.rescale(self.size)
 
     def rescale(self, size):
-        '''Overwritten because of call to set user'''
+        """Overwritten because of call to set user"""
         super().rescale(size)
         self.set_user(self.user)
 

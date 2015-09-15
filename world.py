@@ -1,5 +1,8 @@
 import global_vars
 import pygame
+import copy
+import math
+import inert_objects
 
 
 class WorldObject:
@@ -8,7 +11,6 @@ class WorldObject:
     tooltip = ""
 
     def __init__(self):
-        super().__init__()
         self.position = (0,0)
         self.size = (0, 0)
         self.image = None
@@ -22,8 +24,10 @@ class WorldObject:
 
         self.objects = []
         self.head_object = None
+        self.parent_object = None
         self.selected_object = None
         self.main = False
+        self.inert_objects = []
 
     def rescale(self, size):
         self.image = pygame.transform.scale(self.original_image,
@@ -56,6 +60,9 @@ class WorldObject:
             for o in self.objects:
                 if o.draw():
                     tooltip = o
+
+            for o in self.inert_objects:
+                o.draw()
 
             if tooltip is not None:
                 tooltip.draw_tooltip()
@@ -153,6 +160,18 @@ class WorldObject:
     def mouse_out(self):
         self.mouse_hovering = False
 
+    def back(self):
+        if self.main:
+            self.main = False
+            return True
+        elif self.selected_object is not None:
+            res = self.selected_object.back()
+            if res:
+                self.selected_object = None
+                self.main = True
+            return False
+        return False
+
     def add(self, object):
         self.objects.append(object)
         if self.head_object is None:
@@ -172,11 +191,13 @@ class WorldObject:
         if child.position[0] < self.position[0]:
             if self.left is None:
                 self.left = child
+                child.parent = self
             else:
                 self.left.add_child(child)
         else:
             if self.right is None:
                 self.right = child
+                child.parent = self
             else:
                 self.right.add_child(child)
 
@@ -184,7 +205,38 @@ class WorldObject:
         # TODO: FIX THIS
         if self == child:
             # Remove self from tree
-            pass
+            if self.left is None and self.right is None:
+                # leaf node, no further action required
+                if self.parent.left == self:
+                    self.parent.left = None
+                else:
+                    self.parent.right = None
+            elif self.left is not None and self.right is None:
+                # one child - left
+                if self.parent.left == self:
+                    self.parent.left = self.left
+                else:
+                    self.parent.right = self.left
+            elif self.left is None and self.right is not None:
+                # one child - right
+                if self.parent.left == self:
+                    self.parent.left = self.right
+                else:
+                    self.parent.right = self.right
+            else:
+                # Two children
+                minimal = self.right.find_minimum()
+                minimal_new = copy.copy(minimal)
+                minimal_new.parent = self.parent
+                minimal_new.left = self.left
+                minimal_new.right = self.right
+                if self.parent.left == self:
+                    self.parent.left = minimal_new
+                else:
+                    self.parent.right = minimal_new
+
+                # Now remove 'moved' object
+                self.right.remove_child(minimal)
             return True
         else:
             if child.position[0] < self.position[0]:
@@ -199,6 +251,18 @@ class WorldObject:
                     pass
                 return False
 
+    def find_minimum(self):
+        if self.left is not None:
+            return self.left.find_minimum()
+        else:
+            return self
+
+    def add_inert(self, object):
+        self.inert_objects.append(object)
+
+    def remove_inert(self, object):
+        self.inert_objects.remove(object)
+
 
 class World(WorldObject):
     name = "Factory terrain"
@@ -208,8 +272,13 @@ class World(WorldObject):
     def __init__(self):
         super().__init__()
         self.image = None
-        self.original_image = pygame.image.load('images/map.png')
-        self.rescale(global_vars.screen.get_size())
+        #pygame.image.load('images/map.png')
+        self.original_image = pygame.Surface(global_vars.screen.get_size())
+        self.original_image.fill(pygame.Color('#009933'))
+        screensize = global_vars.screen.get_size()
+        self.rescale(screensize)
+        self.grid = [[None for x in range(math.ceil(screensize[1] / 50))]
+                     for x in range(math.ceil(screensize[0] / 50))]
 
         self.main = True
 
@@ -221,3 +290,19 @@ class World(WorldObject):
     def draw_internal(self):
         """For the world view, draw internal actually draws the image"""
         global_vars.screen.blit(self.image, self.position)
+
+    def back(self):
+        """For the world view, 'back' has no defined action"""
+        if self.main:
+            return True
+        elif self.selected_object is not None:
+            if self.selected_object.back():
+                self.selected_object = None
+                self.main = True
+            return False
+        return False
+
+    def add_road(self, position):
+        tile = inert_objects.RoadTile((position[0] * 50, position[1] * 50))
+        self.grid[position[0]][position[1]] = tile
+        self.inert_objects.append(tile)

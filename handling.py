@@ -1,6 +1,7 @@
 import pygame
 import manage
 import global_vars
+import keymap
 
 class BaseHandling:
     def __init__(self, world, env, clock):
@@ -42,12 +43,16 @@ class InputHandling(BaseHandling):
         # Handle input
         initial = False
         for event in pygame.event.get():
-            if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
-                manage.close()
-            if event.type == pygame.KEYUP and event.key == pygame.K_s:
-                manage.save()
-            if event.type == pygame.KEYUP and event.key == pygame.K_l:
-                manage.load()
+            if event.type == pygame.KEYUP:
+                command = keymap.keymap[event.key]
+                if command == 'exit':
+                    manage.close()
+                if command == 'save':
+                    manage.save()
+                if command == 'load':
+                    manage.load()
+                if command == 'back':
+                    self.world.back()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
             if event.type == pygame.MOUSEBUTTONUP:
