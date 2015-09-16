@@ -1,20 +1,28 @@
-import global_vars
 import pygame
-import copy
-import math
-import inert_objects
+import global_vars
 
 
-class WorldObject:
-    name = ""
-    description = ""
-    tooltip = ""
-
+class BaseObject:
     def __init__(self):
         self.position = (0,0)
         self.size = (0, 0)
         self.image = None
         self.original_image = None
+
+    def rescale(self, size):
+        self.image = pygame.transform.scale(self.original_image,
+                                            size)
+        self.rect = pygame.Rect(self.position[0], self.position[1],
+                                self.size[0], self.size[1])
+
+
+class WorldObject(BaseObject):
+    name = ""
+    description = ""
+    tooltip = ""
+
+    def __init__(self):
+        super().__init__()
         self.tooltip = global_vars.font_30.render(self.tooltip + ' ', True,
                                                   (0, 0, 0), (255, 255, 255))
         self.mouse_hovering = False
@@ -28,12 +36,6 @@ class WorldObject:
         self.selected_object = None
         self.main = False
         self.inert_objects = []
-
-    def rescale(self, size):
-        self.image = pygame.transform.scale(self.original_image,
-                                            size)
-        self.rect = pygame.Rect(self.position[0], self.position[1],
-                                self.size[0], self.size[1])
 
     def update_position(self, new_pos):
         self.position = new_pos
@@ -263,46 +265,18 @@ class WorldObject:
     def remove_inert(self, object):
         self.inert_objects.remove(object)
 
-
-class World(WorldObject):
-    name = "Factory terrain"
-    description = "This is where all the magic happens."
-    tooltip = "Factory Terrain"
-
+class InertWorldObject(BaseObject):
     def __init__(self):
         super().__init__()
-        self.image = None
-        #pygame.image.load('images/map.png')
-        self.original_image = pygame.Surface(global_vars.screen.get_size())
-        self.original_image.fill(pygame.Color('#009933'))
-        screensize = global_vars.screen.get_size()
-        self.rescale(screensize)
-        self.grid = [[None for x in range(math.ceil(screensize[1] / 50))]
-                     for x in range(math.ceil(screensize[0] / 50))]
 
-        self.main = True
-
-        print("World initialized")
-
-    def update_self(self):
-        pass
-
-    def draw_internal(self):
-        """For the world view, draw internal actually draws the image"""
+    def draw(self):
         global_vars.screen.blit(self.image, self.position)
 
-    def back(self):
-        """For the world view, 'back' has no defined action"""
-        if self.main:
-            return True
-        elif self.selected_object is not None:
-            if self.selected_object.back():
-                self.selected_object = None
-                self.main = True
-            return False
+    def is_road(self):
         return False
 
-    def add_road(self, position):
-        tile = inert_objects.RoadTile((position[0] * 50, position[1] * 50))
-        self.grid[position[0]][position[1]] = tile
-        self.inert_objects.append(tile)
+class StaticObject(WorldObject):
+    def __init__(self, size, position):
+        super().__init__()
+        self.size = size
+        self.update_position(position)

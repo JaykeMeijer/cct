@@ -2,8 +2,9 @@
 import global_vars
 from environment import Environment
 from events import Event
-from world import World
-from buildings import Shed, Office
+import world.world
+import world.buildings.shed
+import world.buildings.small_office
 from handling import InputHandling, LogicHandling, DrawHandling
 import pygame
 
@@ -25,23 +26,26 @@ if __name__ == "__main__":
 
     # init Game Objects
     env = Environment()
-    world = World()
-    world.add(Shed((screensize[0] * 0.5 - 40, screensize[1] * 0.52)))
-    world.add(Office((screensize[0] * 0.7 - 40, screensize[1] * 0.52)))
-    world.add_road((8, 9))
-    world.add_road((9, 9))
-    world.add_road((10, 9))
-    world.add_road((11, 9))
-    world.add_road((12, 9))
-    world.add_road((13, 9))
-    world.add_road((14, 9))
-    world.add_road((15, 9))
-    world.add_road((9, 10))
+    w = world.world.World()
+    w.add(world.buildings.shed.Shed((screensize[0] * 0.5 - 40,
+                                     screensize[1] * 0.52)))
+    w.add(
+        world.buildings.small_office.SmallOffice((screensize[0] * 0.7 - 40,
+                                                  screensize[1] * 0.52)))
+    w.add_road((8, 9))
+    w.add_road((9, 9))
+    w.add_road((10, 9))
+    w.add_road((11, 9))
+    w.add_road((12, 9))
+    w.add_road((13, 9))
+    w.add_road((14, 9))
+    w.add_road((15, 9))
+    w.add_road((9, 10))
 
     clock = pygame.time.Clock()
-    inputHandling = InputHandling(world, env, clock)
-    drawHandling = DrawHandling(world, env, clock)
-    logicHandling = LogicHandling(world, env, clock)
+    inputHandling = InputHandling(w, env, clock)
+    drawHandling = DrawHandling(w, env, clock)
+    logicHandling = LogicHandling(w, env, clock)
 
     # Main loop
     while True:
