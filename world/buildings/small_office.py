@@ -26,7 +26,7 @@ class SmallOffice(world.buildings.building.Building):
         # Build internal view
         screensize = global_vars.screen.get_size()
         self.internal_box = (((screensize[0] - screensize[1]) / 2, 0),
-                              (screensize[1], screensize[1]))
+                             (screensize[1], screensize[1]))
         self.internal_image = pygame.Surface(screensize)
         self.internal_image.fill(pygame.Color('black'))
         floor = pygame.Surface(self.internal_box[1])

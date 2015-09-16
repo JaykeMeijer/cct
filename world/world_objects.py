@@ -5,7 +5,7 @@ import copy
 
 class BaseObject:
     def __init__(self):
-        self.position = (0,0)
+        self.position = (0, 0)
         self.size = (0, 0)
         self.image = None
         self.original_image = None
@@ -266,6 +266,7 @@ class WorldObject(BaseObject):
     def remove_inert(self, object):
         self.inert_objects.remove(object)
 
+
 class InertWorldObject(BaseObject):
     def __init__(self):
         super().__init__()
@@ -275,6 +276,7 @@ class InertWorldObject(BaseObject):
 
     def is_road(self):
         return False
+
 
 class StaticObject(WorldObject):
     def __init__(self, size, position):

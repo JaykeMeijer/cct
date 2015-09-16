@@ -13,7 +13,7 @@ class World(world.world_objects.WorldObject):
     def __init__(self):
         super().__init__()
         self.image = None
-        #pygame.image.load('images/map.png')
+        # pygame.image.load('images/map.png')
         self.original_image = pygame.Surface(global_vars.screen.get_size())
         self.original_image.fill(pygame.Color('#009933'))
         screensize = global_vars.screen.get_size()

@@ -13,7 +13,7 @@ if __name__ == "__main__":
     # init Engine
     # screensize = (1920, 1080)
     # global_vars.screen = pygame.display.set_mode(screensize,
-    #                                              pygame.HWSURFACE | 
+    #                                              pygame.HWSURFACE |
     #                                              pygame.DOUBLEBUF |
     #                                              pygame.FULLSCREEN)
     screensize = (960, 540)
@@ -21,8 +21,8 @@ if __name__ == "__main__":
         pygame.display.set_mode(screensize,
                                 pygame.HWSURFACE |
                                 pygame.DOUBLEBUF)
-    info = pygame.display.Info()
-    #print(info)
+    # info = pygame.display.Info()
+    # print(info)
 
     # init Game Objects
     env = Environment()

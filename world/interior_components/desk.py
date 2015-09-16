@@ -35,7 +35,7 @@ class Desk(world.interior_components.interior_object.InternalObject):
         if user is not None:
             self.user = user
             user_img = global_vars.font_30.render(self.user, True,
-                                                       (0, 0, 0))
+                                                  (0, 0, 0))
             ui_size = user_img.get_size()
             self.image.blit(user_img, ((self.size[0] - ui_size[0]) / 2,
                                        (self.size[1] - ui_size[1]) / 2))
