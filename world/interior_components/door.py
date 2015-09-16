@@ -1,5 +1,4 @@
 import pygame
-import global_vars
 import world.interior_components.interior_object
 
 

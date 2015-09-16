@@ -1,6 +1,5 @@
 import global_vars
 import pygame
-import copy
 import math
 import world.world_objects
 import world.outside.roads

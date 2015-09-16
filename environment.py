@@ -41,7 +41,7 @@ class OrderedList:
         pointer = self.head
         if pointer is item:
             self.head = pointer.next
-            return Truen
+            return True
 
         while pointer.next is not None:
             if pointer.next == item:

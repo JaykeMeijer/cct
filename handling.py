@@ -34,14 +34,13 @@ class LogicHandling(BaseHandling):
         self.last_update += time_passed
 
         if self.last_update > 100:
-            self.env.handle(logicclock)
-            self.world.update(time_passed)
+            self.env.handle(self.last_update)
+            self.world.update(self.last_update)
             self.last_update = 0
 
 class InputHandling(BaseHandling):
     def iteration(self):
         # Handle input
-        initial = False
         for event in pygame.event.get():
             if event.type == pygame.KEYUP:
                 command = keymap.keymap[event.key]

@@ -1,5 +1,6 @@
 import pygame
 import global_vars
+import copy
 
 
 class BaseObject:
