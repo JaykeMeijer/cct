@@ -3,6 +3,7 @@ import global_vars
 import world.buildings.building
 import world.interior_components.door
 import world.interior_components.desk
+import world.interior_components.workstation
 
 
 class Shed(world.buildings.building.Building):
@@ -10,7 +11,7 @@ class Shed(world.buildings.building.Building):
     description = "Just a small shed in the middle of nowhere. You're a " + \
                   "long way from becoming a world leading car manufacturer."
     tooltip = "Production shed"
-    size = (75, 100)
+    size = (75, 150)
 
     def __init__(self, position):
         super().__init__(self.size, position)
@@ -38,6 +39,8 @@ class Shed(world.buildings.building.Building):
         self.add(world.interior_components.desk.Desk(
             (self.internal_box[0][0] + 40, self.internal_box[0][1]),
             "CEO"))
+        self.add(world.interior_components.workstation.WorkStation(
+            (self.internal_box[0][0] + 50, self.internal_box[0][1] + 100)))
 
         print("Shed initialized")
 
