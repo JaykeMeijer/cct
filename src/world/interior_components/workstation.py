@@ -3,6 +3,7 @@ import global_vars
 import world.interior_components.interior_object
 import cars.car
 
+
 class WorkStation(world.interior_components.interior_object.InternalObject):
     name = "Work station"
     description = "The workstation is where a car is build."
@@ -15,7 +16,7 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
         self.update_position(position)
 
         self.car = None
-        self.operator = True #  None
+        self.operator = True  # None
         self.create_image()
 
         ### TEMP FOR TESTING ###

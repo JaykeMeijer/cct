@@ -11,4 +11,4 @@ class Frame_ladder(Frame):
         print("Ladder chassis initialized")
 
 
-mainclass = Frame_ladder        
+mainclass = Frame_ladder

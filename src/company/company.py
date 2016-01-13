@@ -60,7 +60,7 @@ class Company:
 
     def move_stock(self):
         for order in self.orders:
-            car = next((x for x in self.stock 
+            car = next((x for x in self.stock
                         if x.identifier == order.identifier), None)
 
             if car is not None:

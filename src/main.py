@@ -7,7 +7,6 @@ import world.buildings.shed
 import world.buildings.small_office
 from handling import InputHandling, LogicHandling, DrawHandling
 from cars.parts.part import discover
-from global_vars import available_parts
 import pygame
 
 
@@ -32,7 +31,6 @@ if __name__ == "__main__":
     print('Discovering all carparts and materials... ', end='')
     partcount, materialcount = discover()
     print('Found %d carparts and %d materials' % (partcount, materialcount))
-
 
     # init Game Objects
     env = Environment()

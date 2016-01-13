@@ -1,5 +1,4 @@
 import os
-import inspect
 import importlib
 from global_vars import available_parts
 
@@ -19,7 +18,8 @@ def grab_parts(main, sub, directory):
     pcount = 0
     for part in next(os.walk(directory))[1]:
         if part[0] not in ['_', '.']:
-            module = importlib.import_module('.'.join([modulebase, part, part]))
+            module = importlib.import_module('.'.join([modulebase, part,
+                                             part]))
             partclass = getattr(module, 'mainclass', None)
             if partclass:
                 partlist[partclass.identifier] = partclass

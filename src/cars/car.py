@@ -54,7 +54,8 @@ def design_to_classes(design):
     for one, fields in standard_translations.items():
         for two in fields:
             try:
-                new_design[one][two] = available_parts[one][two][design[one][two]]
+                new_design[one][two] = \
+                    available_parts[one][two][design[one][two]]
             except KeyError:
                 print('Unavailable part in design:', design[one][two])
                 return
@@ -72,7 +73,8 @@ def design_to_classes(design):
 
     for category, fields in materials.items():
         for field in fields:
-            new_design[category][field] = available_parts['materials'][design[category][field]]
+            new_design[category][field] = \
+                available_parts['materials'][design[category][field]]
     return design
 
 
@@ -97,8 +99,8 @@ def car_from_design(design):
     #seats, options, material
     interior_design = design['interior']
     interior = Interior(
-            interior_design['seats'](interior_design['seats_material']),
-            [x() for x in interior_design['options']],
-            interior_design['dashboard_material']())
+        interior_design['seats'](interior_design['seats_material']),
+        [x() for x in interior_design['options']],
+        interior_design['dashboard_material']())
 
     return Car(body, engine, drive, interior)
