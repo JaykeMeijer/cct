@@ -6,6 +6,7 @@ import world.world
 import world.buildings.shed
 import world.buildings.small_office
 from handling import InputHandling, LogicHandling, DrawHandling
+from cars.parts.part import discover
 import pygame
 
 
@@ -16,13 +17,20 @@ if __name__ == "__main__":
     #                                              pygame.HWSURFACE |
     #                                              pygame.DOUBLEBUF |
     #                                              pygame.FULLSCREEN)
+    print('Creating gamescreen... ', end='')
     screensize = (960, 540)
     global_vars.screen = \
         pygame.display.set_mode(screensize,
                                 pygame.HWSURFACE |
                                 pygame.DOUBLEBUF)
+    print('Screen created')
     # info = pygame.display.Info()
     # print(info)
+
+    # Discover available carparts
+    print('Discovering all carparts and materials... ', end='')
+    partcount, materialcount = discover()
+    print('Found %d carparts and %d materials' % (partcount, materialcount))
 
     # init Game Objects
     env = Environment()

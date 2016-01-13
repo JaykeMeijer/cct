@@ -1,22 +1,23 @@
-import cars.parts.carpart
-import cars.parts.body
-import cars.parts.engine
-import cars.parts.interior
 import global_vars
 
 
-class Car(cars.parts.carpart.CarSection):
+class Car():
     size = (100, 200)
     position = (25, 50)
 
     def __init__(self, body, engine, interior):
-        super().__init__(body, engine, interior)
         self.station = None
 
     def set_station(self, station):
         self.station = station
         self.parent = station
-        self.parent_moved()
+        #self.parent_moved()
+
+    def build(self, timestep):
+        pass
+
+    def draw(self):
+        pass
 
     # def draw(self):
         #global_vars.screen.blit(self.image, self.position)
@@ -36,14 +37,4 @@ class Car(cars.parts.carpart.CarSection):
         #         self.station.position)\
 
 def basicCar():
-    body = cars.parts.body.Body(cars.parts.body.Frame(),
-                                cars.parts.body.Bodywork(),
-                                cars.parts.body.Paint())
-    engine = cars.parts.engine.Engine(cars.parts.engine.Block(),
-                                      cars.parts.engine.Head(),
-                                      cars.parts.engine.Externals())
-    interior = cars.parts.interior.Interior(cars.parts.interior.Dashboard(),
-                                            cars.parts.interior.Seats(),
-                                            cars.parts.interior.Infotainment())
-
-    return Car(body, engine, interior)
+    return Car(None, None, None)
