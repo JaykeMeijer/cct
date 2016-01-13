@@ -2,7 +2,10 @@ from cars.parts.drive.gearbox.gearbox import Gearbox
 
 
 class Gearbox_manual(Gearbox):
-    def __init__(self):
+    identifier = 'drive.gearbox.manual'
+
+    def __init__(self, gears):
+        self.gears = gears
         print("Manual gearbox initialized")
 
 

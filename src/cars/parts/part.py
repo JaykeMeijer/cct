@@ -22,7 +22,7 @@ def grab_parts(main, sub, directory):
             module = importlib.import_module('.'.join([modulebase, part, part]))
             partclass = getattr(module, 'mainclass', None)
             if partclass:
-                partlist.append(partclass)
+                partlist[partclass.identifier] = partclass
                 pcount += 1
     return pcount
 

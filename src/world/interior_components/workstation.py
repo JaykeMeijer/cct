@@ -18,7 +18,7 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
         self.operator = True #  None
         self.create_image()
 
-        self.set_car(cars.car.basicCar())
+        #self.set_car(cars.car.basicCar())
 
         print("Workstation initialized")
 

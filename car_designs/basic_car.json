@@ -1,0 +1,22 @@
+{
+    "body": {
+        "frame": "body.frame.ladder",
+        "bodywork_material": "material.steel",
+        "frame_material": "material.steel",
+        "options": ["body.option.spoiler"]},
+    "drive": {
+        "drivetype": "drive.drivetype.front",
+        "gearbox": "drive.gearbox.manual",
+        "gears": 5,
+        "options": ["drive.option.abs"]},
+    "engine": {
+        "enginetype": "engine.enginetype.v8",
+        "engine_material": "material.steel",
+        "head": "engine.head.dohc",
+        "options": ["engine.option.turbocharger"]},
+    "interior": {
+        "seats": "interior.seats.sports",
+        "seats_material": "material.leather",
+        "dashboard_material": "material.leather",
+        "options": ["interior.option.basic_radio"]}
+}

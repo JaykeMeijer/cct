@@ -5,7 +5,7 @@ from cars.parts.materials.leather.leather import Leather
 class Interior(Part):
     possible_dash_materials = [Leather]
 
-    def __init__(self, seats, options):
+    def __init__(self, seats, options, material):
         self.seats = seats
         self.options = options
-        self.dash_material = None
+        self.dash_material = dash_material

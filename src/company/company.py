@@ -7,8 +7,43 @@ class Company:
     def __init__(self):
         self.personnel = []
 
+        # Orders are what the customers have ordered, or what has been manually
+        # requested to be produced. Tuple with order and whether ordered by a
+        # customer or not.
         self.orders = []
+
+        # Stock are cars that have been produced but were not required for
+        # orders. Take up storage space.
         self.stock = []
+
+        # Designs are all complete cars that have been researched and can be
+        # produced at once.
+        self.designs = []
+
+        # Catalog are the designs that are available for ordering by clients
+        self.catalog = []
+
+        # These are the components or sets of components that can be used in a
+        # design or a new set of components.
+        self.researched_components = {
+            'body': {
+                'complete': [],
+                'frames': [],
+                'options': []},
+            'engine': {
+                'complete': [],
+                'enginetype': [],
+                'head': [],
+                'options': []},
+            'drive': {
+                'complete': [],
+                'drivetype': [],
+                'gearbox': [],
+                'options': []},
+            'interior': {
+                'seats': [],
+                'options': []},
+            'materials': []}
         self.money = 1000
 
     def financial_transaction(self, value, description):
@@ -36,9 +71,7 @@ class Company:
     def generate_orders(self):
         # TODO: Base on market
         if len(self.orders) == 0:
-            self.orders.append(market.market.Order(
-                'base_frame_base_bodywork_base_paint_base_block_base_head' +
-                'base_externals_base_dashboard_base_seats_base_infotainment'))
+            self.orders.append()
 
 
 class Personnel:
