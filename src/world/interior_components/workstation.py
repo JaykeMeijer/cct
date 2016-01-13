@@ -19,14 +19,6 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
         self.operator = True  # None
         self.create_image()
 
-        ### TEMP FOR TESTING ###
-        import json
-        from cars.car import design_to_classes, car_from_design
-        with open('../car_designs/basic_car.json') as f:
-            design = design_to_classes(json.loads(f.read()))
-
-        self.set_car(car_from_design(design))
-
         print("Workstation initialized")
 
     def create_image(self):
@@ -51,6 +43,9 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
     def update(self, time_passed):
         if self.operator is not None and self.car is not None:
             self.car.build(time_passed * 10)
+        elif self.car is None and global_vars.company.orders is not None:
+            self.car = cars.car.car_from_design(global_vars.company.orders[0].design)
+            self.car.set_station(self)
 
     def on_click(self):
         pass

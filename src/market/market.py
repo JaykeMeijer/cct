@@ -3,9 +3,13 @@ class Market:
         self.oilprice = 0
         self.metalprice = 0
 
+    def handle(self, time_passed):
+        pass
 
 class Order:
     def __init__(self, design, color, customer=False):
+        print('Created order')
         self.design = design
         self.color = color
         self.customer = customer
+        self.chassisnumber = 1234  # TODO generate nice numbers

@@ -27,14 +27,18 @@ class DrawHandling(BaseHandling):
 
 
 class LogicHandling(BaseHandling):
-    def __init__(self, world, env, clock):
+    def __init__(self, world, env, company, market, clock):
         super().__init__(world, env, clock)
+        self.company = company
+        self.market = market
         self.last_update = 0
 
     def iteration(self, time_passed):
         self.last_update += time_passed
 
         if self.last_update > 100:
+            self.company.handle(self.last_update)
+            self.market.handle(self.last_update)
             self.env.handle(self.last_update)
             self.world.update(self.last_update)
             self.last_update = 0

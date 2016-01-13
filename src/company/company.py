@@ -18,7 +18,7 @@ class Company:
 
         # Designs are all complete cars that have been researched and can be
         # produced at once.
-        self.designs = []
+        self.designs = {}
 
         # Catalog are the designs that are available for ordering by clients
         self.catalog = []
@@ -46,12 +46,19 @@ class Company:
             'materials': []}
         self.money = 1000
 
+    def handle(self, time_passed):
+        self.move_stock()
+        self.generate_orders()
+
     def financial_transaction(self, value, description):
         self.money += value
         if self.money < 0:
             print('BROKE')
 
-        print(description)
+        print('Transaction:\n' +
+              '\tAmount: %d\n' % value+
+              '\tNew account:%d' % self.money+
+              '\t%s' % description)
 
     def pay_salary(self):
         for p in self.personnel:
@@ -61,17 +68,18 @@ class Company:
     def move_stock(self):
         for order in self.orders:
             car = next((x for x in self.stock
-                        if x.identifier == order.identifier), None)
+                        if x.chassisnumber == order.chassisnumber), None)
 
             if car is not None:
                 self.stock.remove(car)
                 self.orders.remove(order)
-                self.financial_transaction(self, car.value, "Sale of car")
+                self.financial_transaction(car.price, "Sale of car")
 
     def generate_orders(self):
         # TODO: Base on market
         if len(self.orders) == 0:
-            self.orders.append()
+            self.orders.append(market.market.Order(self.designs['basecar'],
+                                                   'red', True))
 
 
 class Personnel:

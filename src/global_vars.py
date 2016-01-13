@@ -1,4 +1,8 @@
 import pygame
+from company.company import Company
+from market.market import Market
+
+
 pygame.font.init()
 
 
@@ -14,6 +18,8 @@ available_parts = {'body': {'frame': {},
                                 'options': {}},
                    'materials': {}}
 
+company = Company()
+market = Market()
 
 screen = None
 

@@ -1,4 +1,4 @@
-from global_vars import available_parts
+from global_vars import available_parts, company
 from cars.parts.body.body import Body
 from cars.parts.engine.engine import Engine
 from cars.parts.drive.drive import Drive
@@ -9,12 +9,16 @@ class Car():
     size = (100, 200)
     position = (25, 50)
 
-    def __init__(self, body, engine, drive, interior):
+    def __init__(self, body, engine, drive, interior, chassisnumber):
         self.station = None
         self.body = body
         self.engine = engine
         self.drive = drive
         self.interior = interior
+        self.timestep = 0
+        self.chassisnumber = chassisnumber
+        self.value = 12345  # TODO calculate based on all components
+        self.price = 55555  # Set in design or catalog
 
     def set_station(self, station):
         self.station = station
@@ -22,7 +26,12 @@ class Car():
         #self.parent_moved()
 
     def build(self, timestep):
-        pass
+        self.timestep += timestep
+        if self.timestep > 50000:
+            # TEMP for testing
+            print("Car done")
+            company.stock.append(self)
+            self.station.unset_car(self)
 
     def draw(self):
         pass
@@ -78,7 +87,7 @@ def design_to_classes(design):
     return design
 
 
-def car_from_design(design):
+def car_from_design(design, chassisnumber=None):
 
     engine_design = design['engine']
     engine = Engine(engine_design['enginetype'](),
@@ -103,4 +112,7 @@ def car_from_design(design):
         [x() for x in interior_design['options']],
         interior_design['dashboard_material']())
 
-    return Car(body, engine, drive, interior)
+    if chassisnumber is None:
+        chassisnumber = 1234  # Generate nice number
+
+    return Car(body, engine, drive, interior, chassisnumber)

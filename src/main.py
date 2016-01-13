@@ -7,6 +7,7 @@ import world.buildings.shed
 import world.buildings.small_office
 from handling import InputHandling, LogicHandling, DrawHandling
 from cars.parts.part import discover
+import global_vars as gv
 import pygame
 
 
@@ -19,7 +20,7 @@ if __name__ == "__main__":
     #                                              pygame.FULLSCREEN)
     print('Creating gamescreen... ', end='')
     screensize = (960, 540)
-    global_vars.screen = \
+    gv.screen = \
         pygame.display.set_mode(screensize,
                                 pygame.HWSURFACE |
                                 pygame.DOUBLEBUF)
@@ -53,7 +54,22 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     inputHandling = InputHandling(w, env, clock)
     drawHandling = DrawHandling(w, env, clock)
-    logicHandling = LogicHandling(w, env, clock)
+    logicHandling = LogicHandling(w, env, gv.company, gv.market, clock)
+
+    # Temp add a design to the system
+    import json
+    from cars.car import design_to_classes, car_from_design
+    with open('../car_designs/basic_car.json') as f:
+        design = design_to_classes(json.loads(f.read()))
+    gv.company.designs['basecar'] = design
+
+    # Also add these to the 'researched components'
+    gv.company.researched_components = dict(gv.available_parts)
+    # Add used combinations too
+    gv.company.researched_components['body']['complete'] = [design['body']]
+    gv.company.researched_components['engine']['complete'] = [design['engine']],
+    gv.company.researched_components['drive']['complete'] = [design['drive']]
+
 
     # Main loop
     while True:
