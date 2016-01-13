@@ -125,11 +125,14 @@ class WorldObject(BaseObject):
             if self.head_object is not None:
                 res = self.head_object.mouse_clicked()
                 if res is None:
+                    # Nothing clicked
                     pass
                 elif res:
+                    # Selected one of the children, make that active
                     self.main = False
                     self.selected_object = res
                 else:
+                    # Back to previous screen
                     self.main = False
                     return False
             return None

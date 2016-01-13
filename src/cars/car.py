@@ -27,9 +27,8 @@ class Car():
 
     def build(self, timestep):
         self.timestep += timestep
-        if self.timestep > 50000:
+        if self.timestep > 500000:
             # TEMP for testing
-            print("Car done")
             company.stock.append(self)
             self.station.unset_car(self)
 

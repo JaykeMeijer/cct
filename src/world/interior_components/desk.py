@@ -19,6 +19,8 @@ class Desk(world.interior_components.interior_object.InternalObject):
         self.user = user
         self.create_image()
 
+        self.add(global_vars.computer)
+
         print("Desk initialized")
 
     def create_image(self):

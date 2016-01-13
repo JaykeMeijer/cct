@@ -38,9 +38,9 @@ if __name__ == "__main__":
     w = world.world.World()
     w.add(world.buildings.shed.Shed((screensize[0] * 0.5 - 40,
                                      screensize[1] * 0.52)))
-    # w.add(
-    #    world.buildings.small_office.SmallOffice((screensize[0] * 0.7 - 40,
-    #                                              screensize[1] * 0.52)))
+    w.add(
+       world.buildings.small_office.SmallOffice((screensize[0] * 0.7 - 40,
+                                                 screensize[1] * 0.52)))
     w.add_road((8, 9))
     w.add_road((9, 9))
     w.add_road((10, 9))

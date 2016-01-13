@@ -11,7 +11,7 @@ class BaseHandling:
         self.clock = pygame.time.Clock()
 
     def iteration(self):
-        raise NotImplementedError
+        raise NotImplemented
 
 
 class DrawHandling(BaseHandling):
