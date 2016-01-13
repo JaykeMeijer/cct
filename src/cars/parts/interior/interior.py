@@ -8,4 +8,5 @@ class Interior(Part):
     def __init__(self, seats, options, material):
         self.seats = seats
         self.options = options
-        self.dash_material = dash_material
+        self.dash_material = material
+        print('Interior init')

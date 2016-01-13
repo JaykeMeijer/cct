@@ -77,6 +77,7 @@ def design_to_classes(design):
 
 
 def car_from_design(design):
+
     engine_design = design['engine']
     engine = Engine(engine_design['enginetype'](),
                     engine_design['head'](),
@@ -96,6 +97,8 @@ def car_from_design(design):
     #seats, options, material
     interior_design = design['interior']
     interior = Interior(
-            interior_design['seats'](interior_design('seats_material')),
+            interior_design['seats'](interior_design['seats_material']),
             [x() for x in interior_design['options']],
             interior_design['dashboard_material']())
+
+    return Car(body, engine, drive, interior)

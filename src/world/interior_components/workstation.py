@@ -18,7 +18,13 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
         self.operator = True #  None
         self.create_image()
 
-        #self.set_car(cars.car.basicCar())
+        ### TEMP FOR TESTING ###
+        import json
+        from cars.car import design_to_classes, car_from_design
+        with open('../car_designs/basic_car.json') as f:
+            design = design_to_classes(json.loads(f.read()))
+
+        self.set_car(car_from_design(design))
 
         print("Workstation initialized")
 

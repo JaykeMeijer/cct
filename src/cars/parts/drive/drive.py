@@ -7,3 +7,4 @@ class Drive(Part):
         self.gearbox = gearbox
         self.options = options
         self.gears = 0
+        print('Drive init')
