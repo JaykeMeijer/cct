@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-import global_vars
 from environment import Environment
 from events import Event
+from market.market import Market
+from company.company import Company
+from overviews.computer.computer import Computer
 import world.world
 import world.buildings.shed
 import world.buildings.small_office
 from handling import InputHandling, LogicHandling, DrawHandling
-from cars.parts.part import discover
+from cars.parts.part import discover as discover_parts
+from overviews.computer.apps.app import discover as discover_apps
 import global_vars as gv
 import pygame
 
@@ -30,11 +33,19 @@ if __name__ == "__main__":
 
     # Discover available carparts
     print('Discovering all carparts and materials... ', end='')
-    partcount, materialcount = discover()
+    partcount, materialcount = discover_parts()
     print('Found %d carparts and %d materials' % (partcount, materialcount))
+
+    # Discover available apps
+    print('Discovering all apps... ', end='')
+    appcount = discover_apps()
+    print('Found %d apps' % appcount)
 
     # init Game Objects
     env = Environment()
+    gv.company = Company()
+    gv.market = Market()
+    gv.computer = Computer()
     w = world.world.World()
     w.add(world.buildings.shed.Shed((screensize[0] * 0.5 - 40,
                                      screensize[1] * 0.52)))

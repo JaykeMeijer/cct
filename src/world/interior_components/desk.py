@@ -47,4 +47,7 @@ class Desk(world.interior_components.interior_object.InternalObject):
         self.create_image()
 
     def draw_internal(self):
-        global_vars.screen.fill(pygame.Color('blue'))
+        global_vars.screen.fill(pygame.Color('lightgrey'))
+        shade_area = pygame.Surface((820, 520))
+        shade_area.fill((143, 143, 143))
+        global_vars.screen.blit(shade_area, (70, 10))

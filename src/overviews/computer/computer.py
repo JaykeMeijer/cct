@@ -1,6 +1,7 @@
 from overviews.overview import Overview
 from overviews.computer.apps.desktop.desktop import Desktop
 from overviews.computer.apps.order_manager.order_manager import Order_manager
+from global_vars import available_apps
 
 
 class Computer(Overview):
@@ -8,8 +9,11 @@ class Computer(Overview):
         self.main = False
         self.parent_object = None
         self.apps = {}
-        self.apps['order_manager'] = Order_manager(self)
-        self.apps['desktop'] = Desktop(self)
+
+        # Initiate all apps
+        for title, app in available_apps.items():
+            self.apps[title] = app(self)
+
         self.active = self.apps['desktop']
 
     def mouse_moved(self):
@@ -29,7 +33,7 @@ class Computer(Overview):
         self.active.draw()
 
     def update(self, time_passed):
-        pass
+        self.active.update(time_passed)
 
     def mouse_out(self):
         pass

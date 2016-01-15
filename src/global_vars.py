@@ -1,7 +1,4 @@
 import pygame
-from company.company import Company
-from market.market import Market
-from overviews.computer.computer import Computer
 
 
 pygame.font.init()
@@ -20,9 +17,10 @@ available_parts = {'body': {'frame': {},
                    'interior': {'seats': {},
                                 'options': {}},
                    'materials': {}}
+available_apps = {}
 
-company = Company()
-market = Market()
-computer = Computer()
+company = None
+market = None
+computer = None
 
 screen = None

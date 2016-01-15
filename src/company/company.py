@@ -78,8 +78,12 @@ class Company:
     def generate_orders(self):
         # TODO: Base on market
         if len(self.orders) == 0:
-            self.orders.append(market.market.Order(self.designs['basecar'],
-                                                   'red', True))
+            self.orders.append(market.market.Order(
+                'basecar', self.designs['basecar'], 'red', True))
+            self.orders.append(market.market.Order(
+                'basecar', self.designs['basecar'], 'blue', True))
+            self.orders.append(market.market.Order(
+                'basecar', self.designs['basecar'], 'green', True))
 
 
 class Personnel:
