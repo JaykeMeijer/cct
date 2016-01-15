@@ -85,6 +85,14 @@ class Company:
             self.orders.append(market.market.Order(
                 'basecar', self.designs['basecar'], 'green', True))
 
+    def get_next_order(self):
+        for order in self.orders:
+            if not order.active:
+                order.active = True
+                return order
+
+        return False
+
 
 class Personnel:
     def __init__(self, role, name):

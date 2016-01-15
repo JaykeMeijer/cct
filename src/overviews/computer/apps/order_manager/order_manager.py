@@ -57,7 +57,11 @@ class Order_manager(App):
         # Order Header
         for text, parameter, pos in self.order_header:
             textimg = gv.font_30.render(text, True, (0, 0, 0))
-            self.original_image.blit(textimg, (30 + pos, 60))
+            self.original_image.blit(textimg, (30 + pos, 70))
+
+        # Logo
+        textimg = gv.font_30.render('Order Manager Pro', True, (100, 100, 100))
+        self.original_image.blit(textimg, (30, 20))
 
         self.rescale(self.size)
 
@@ -72,10 +76,13 @@ class Order_manager(App):
 
         # Draw orders
         for i, order in enumerate(gv.company.orders[:15]):
-            if i == self.selected_order:
-                color = (255, 255, 255)
+            if order.active:
+                color = (150, 150, 150)
             else:
-                color = (0, 0, 0)
+                if i == self.selected_order:
+                    color = (255, 255, 255)
+                else:
+                    color = (0, 0, 0)
 
             for text, parameter, pos in self.order_header:
                 text = gv.font_30.render(str(getattr(order, parameter)), True,
@@ -86,17 +93,24 @@ class Order_manager(App):
             # 
 
     def perform_action(self, action):
+        if action[0].startswith('om_selection') and \
+            gv.company.orders[self.selected_order].active:
+            # Modification action on active order, not allowed
+            return None
+
         if action[0] == 'om_select_order':
             self.selected_order = action[1]
         elif action[0] == 'om_selection_up':
-            if self.selected_order > 0:
+            if self.selected_order > 0 and \
+                    not gv.company.orders[self.selected_order - 1].active:
                 gv.company.orders[self.selected_order - 1], \
                 gv.company.orders[self.selected_order] = \
                 gv.company.orders[self.selected_order], \
                 gv.company.orders[self.selected_order - 1]
                 self.selected_order -= 1
         elif action[0] == 'om_selection_down':
-            if self.selected_order < len(gv.company.orders) - 1:
+            if self.selected_order < len(gv.company.orders) - 1 and \
+                    not gv.company.orders[self.selected_order + 1].active:
                 gv.company.orders[self.selected_order + 1], \
                 gv.company.orders[self.selected_order] = \
                 gv.company.orders[self.selected_order], \

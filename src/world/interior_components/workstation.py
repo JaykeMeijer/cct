@@ -43,9 +43,11 @@ class WorkStation(world.interior_components.interior_object.InternalObject):
     def update(self, time_passed):
         if self.operator is not None and self.car is not None:
             self.car.build(time_passed * 10)
-        elif self.car is None and global_vars.company.orders is not None:
-            self.car = cars.car.car_from_design(global_vars.company.orders[0].design)
-            self.car.set_station(self)
+        elif self.car is None:
+            order = global_vars.company.get_next_order()
+            if order:
+                self.car = cars.car.car_from_design(order.design)
+                self.car.set_station(self)
 
     def on_click(self):
         pass

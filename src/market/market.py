@@ -9,6 +9,7 @@ class Market:
 class Order:
     def __init__(self, cartype, design, color, customer=False):
         print('Created order')
+        self.active = False
         self.type = cartype
         self.design = design
         self.color = color

@@ -1,4 +1,4 @@
-from global_vars import available_parts, company
+import global_vars as gv
 from cars.parts.body.body import Body
 from cars.parts.engine.engine import Engine
 from cars.parts.drive.drive import Drive
@@ -29,7 +29,7 @@ class Car():
         self.timestep += timestep
         if self.timestep > 500000:
             # TEMP for testing
-            company.stock.append(self)
+            gv.company.stock.append(self)
             self.station.unset_car(self)
 
     def draw(self):
@@ -63,13 +63,13 @@ def design_to_classes(design):
         for two in fields:
             try:
                 new_design[one][two] = \
-                    available_parts[one][two][design[one][two]]
+                    gv.available_parts[one][two][design[one][two]]
             except KeyError:
                 print('Unavailable part in design:', design[one][two])
                 return
 
         try:
-            new_design[one]['options'] = [available_parts[one]['options'][x]
+            new_design[one]['options'] = [gv.available_parts[one]['options'][x]
                                           for x in design[one]['options']]
         except KeyError:
             print('Unavailable part in design in:', design[one]['options'])
@@ -82,7 +82,7 @@ def design_to_classes(design):
     for category, fields in materials.items():
         for field in fields:
             new_design[category][field] = \
-                available_parts['materials'][design[category][field]]
+                gv.available_parts['materials'][design[category][field]]
     return design
 
 
