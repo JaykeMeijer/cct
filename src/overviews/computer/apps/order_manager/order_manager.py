@@ -94,8 +94,9 @@ class Order_manager(App):
 
     def perform_action(self, action):
         if action[0].startswith('om_selection') and \
-            gv.company.orders[self.selected_order].active:
-            # Modification action on active order, not allowed
+                (self.selected_order >= len(gv.company.orders) or \
+                 gv.company.orders[self.selected_order].active):
+            # Modification action on active order or on empty row, not allowed
             return None
 
         if action[0] == 'om_select_order':
